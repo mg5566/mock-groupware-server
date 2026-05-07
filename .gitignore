@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+
+# Java
+*.class
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+application-local.yml
+application-local.properties
