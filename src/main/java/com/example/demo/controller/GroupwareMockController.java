@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.GwApiResponse;
+import com.example.demo.dto.GwDocListData;
 import com.example.demo.dto.GwDocListRequest;
 import com.example.demo.dto.GwDocListResponse;
 
@@ -18,9 +20,19 @@ import jakarta.validation.Valid;
 public class GroupwareMockController {
   
   @PostMapping("/IF_APP_DOC_HTML")
-  public List<GwDocListResponse> getGroupWareList(
+  public Map<String, Object> getGroupWareList(
     @Valid @RequestBody GwDocListRequest request
   ) {
+    if ("fail".equals(request.getUserId())) {
+      return Map.of(
+        "responseText", "SUCCESS",
+        "data", Map.of(
+          "result", "fail",
+          "message", "오류가 발생했습니다."
+        )
+      );
+    }
+
     GwDocListResponse response = new GwDocListResponse();
 
     response.setDocId("DOC-001");
@@ -36,8 +48,10 @@ public class GroupwareMockController {
     response.setAttcFileNm("테스트.pdf");
     response.setAttcFileId("FILE-001");
 
-    return List.of(response);
-    // return List.of();
+    return Map.of(
+      "responseText", "SUCCESS",
+      "data", List.of(response)
+    );
   }
 
   @PostMapping("/IF_APP_DOC_UPLOAD")
