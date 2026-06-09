@@ -57,7 +57,10 @@ public class GroupwareMockController {
 
   private List<GwDocListResponse> createDummyDocs() {
     return java.util.stream.IntStream.rangeClosed(1, 10)
-      .mapToObj(this::createDummyDoc)
+      // Alternate attachment presence to support both response scenarios.
+      .mapToObj(index -> index % 2 == 0
+        ? createDummyDocWithoutAttachments(index)
+        : createDummyDoc(index))
       .toList();
   }
 
@@ -84,6 +87,28 @@ public class GroupwareMockController {
     response.setAttcFileId(
       String.format("FILE-%03d|FILE-%03d", index, index + 100)
     );
+
+    return response;
+  }
+
+  private GwDocListResponse createDummyDocWithoutAttachments(int index) {
+    GwDocListResponse response = new GwDocListResponse();
+
+    response.setDocId(String.format("DOCONLY-%03d", index));
+    response.setDocTitle("테스트 결재문서(본문만)" + index);
+    response.setApprCompleteDt("2026-05-07 12:00:00");
+
+    response.setDocDrftId("user01");
+    response.setDocDrftNm("홍본문");
+
+    response.setDocDrftDeptCd("D001");
+    response.setDocDrftDeptNm("경영관리본부");
+
+    response.setDocApprId("user02");
+    response.setDocApprNm("킴승인");
+
+    response.setDocDrftDeptCd("D001");
+    response.setDocDrftDeptNm("경영관리본부");
 
     return response;
   }
