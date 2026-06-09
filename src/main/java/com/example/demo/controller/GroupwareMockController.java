@@ -23,12 +23,12 @@ import jakarta.validation.Valid;
 public class GroupwareMockController {
   private static final Logger log = LoggerFactory.getLogger(GroupwareMockController.class);
   
-  @PostMapping("/IF_APP_DOC_HTML")
+  @PostMapping("/IF_APP_DOC_LIST")
   public Map<String, Object> getGroupWareList(
     @Valid @RequestBody GwDocListRequest request
   ) {
     log.info(
-      "IF_APP_DOC_HTML called: userId={}, sdate={}, edate={}, pageNumber={}, pageSize={}",
+      "IF_APP_DOC_LIST called: userId={}, sdate={}, edate={}, pageNumber={}, pageSize={}",
       request.getUserId(),
       request.getSdate(),
       request.getEdate(),
@@ -37,7 +37,7 @@ public class GroupwareMockController {
     );
 
     if ("fail".equals(request.getUserId())) {
-      log.warn("IF_APP_DOC_HTML failed for userId={}", request.getUserId());
+      log.warn("IF_APP_DOC_LIST failed for userId={}", request.getUserId());
       return Map.of(
         "responseText", "SUCCESS",
         "data", Map.of(
